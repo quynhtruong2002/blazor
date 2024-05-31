@@ -1,0 +1,37 @@
+﻿@page "/"
+@using BlazorApp.Components.Pages.Schemas;
+@inject NavigationManager Navigation
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+<button class="btn btn-primary" @onclick="@NavigateToCounter">Return to home page.</button>
+Render fragments for reusable redering logic:
+<div class="message">
+    @foreach(var mess in messages)
+    {
+        @DisplayMessage(mess)
+    }
+</div>
+@code {
+    private List<Message> messages;
+    
+    protected override void OnInitialized()
+    {
+        messages = new List<Message> 
+        {
+            new Message() { Id = "1", Content = "Hi!"},
+            new Message() { Id = "2", Content = "Bich Quynh"},
+            new Message() { Id = "3", Content = "How are you today"}
+        };
+    }
+    private RenderFragment<Message> DisplayMessage = message =>
+        @<div class="chat-message">
+            <span class="">@message.Id</span>
+            <span class="">@message.Content</span>
+        </div>;
+
+    private void NavigateToCounter()
+    {
+        Navigation.NavigateTo("/counter");
+    }
+}

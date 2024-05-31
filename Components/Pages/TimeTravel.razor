@@ -1,0 +1,21 @@
+@page "/time-travel"
+@using BlazorApp.Services
+@inject ITimeTravel TimeTravel1
+@inherits OwningComponentBase
+
+<h1><code>OwningComponentBase</code> Example:</h1>
+
+<ul>
+    <li>@TimeTravel1?.DT</li>
+    <li>@TimeTravel2?.DT</li>
+</ul>
+
+@code {
+    private ITimeTravel TimeTravel2 { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        TimeTravel2 = ScopedServices.GetRequiredService<ITimeTravel>();
+    }
+
+}

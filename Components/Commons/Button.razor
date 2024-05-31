@@ -1,0 +1,53 @@
+@if(showBtn) {
+    <p>@text</p>
+    <header>@Header</header>
+    <body>@BodyBtn</body>
+    @* <button @onclick="Toggle" class="btn btn-success" >@Body.Title</button> *@
+    <footer>@Footer</footer>
+}
+@code {
+    [Parameter]
+    public ButtonBody Body { get; set; } = new()
+    {
+        Title = "Click me",
+        Style = "nomel"
+    };
+
+    [Parameter]
+    public bool ShowBtn { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> StatusBtnChange { get; set; }
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public RenderFragment? BodyBtn { get; set; }
+
+    [Parameter]
+    public RenderFragment? Footer { get; set; }
+
+    public string text = "hi, im a first text";
+
+    private bool showBtn;
+
+    protected override void OnInitialized()
+    {
+        text = "hi, im a first text";
+    }
+
+    protected override void OnParametersSet()
+    {
+        showBtn = ShowBtn;
+    }
+    public void Toggle()
+    {
+        showBtn = false;
+        StatusBtnChange.InvokeAsync(showBtn);
+    }
+    public void SetText(string text)
+    {
+        this.text = text;
+    }
+}

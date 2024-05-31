@@ -1,0 +1,44 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+@inherits CounterBase
+@using BlazorApp.Components.Commons
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+<p role="status">Current count: @currentCount</p>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+@if(showBtn) {
+    <Button @ref="myButton" Body="@(new ButtonBody() { Title = "Quynh" })" ShowBtn="@showBtn">
+        <Header>
+            <h1>This is the Header from Parent Component</h1>
+        </Header>
+        <BodyBtn>
+            <label for="name"></label>
+            <input id="name" @bind="name"/>
+        </BodyBtn>
+        <Footer>
+            <p>This is the Footer from Parent Component</p>
+        </Footer>
+    </Button>
+}
+
+<p class="m-4 text-info">@message</p>
+
+<button @onclick="ChangeTextInButton" class="btn btn-danger">Click to change text in Button component</button>
+
+@code {
+    private string name;
+    private string? message;
+    private bool showBtn;
+    private Button myButton;
+    protected override void OnInitialized()
+    {
+        message = $"Initialized at {DateTime.Now}";
+        showBtn = true;
+    }
+    private void ChangeTextInButton()
+    {
+        myButton.SetText(this.name);
+    }
+}
